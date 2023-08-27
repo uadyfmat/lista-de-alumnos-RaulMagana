@@ -13,6 +13,32 @@ struct Nodo {
 	struct Nodo* siguiente;
 };
 
+struct Alumno* crearAlumno(const char* nombre, int creditos, int semestre);
+void imprimirAlumno(struct Alumno* alumno);
+struct Nodo* crearNodo(struct Alumno* alumno);
+int insertarNodosPorCreditos(struct Nodo** lista, struct Nodo* nuevoNodo);
+void imprimirLista(struct Nodo* lista);
+
+int main() {
+	
+	struct Nodo* lista = NULL;
+	
+	struct Alumno* alumno1 = crearAlumno("Raul Alejandro Magana Flores", 105, 5);
+	struct Alumno* alumno2 = crearAlumno("Jimena Guadalupe Garcia Rios", 107, 3);
+	struct Alumno* alumno3 = crearAlumno("Jesus Mateo Ortiz Chay", 126, 6);
+	struct Alumno* alumno4 = crearAlumno("Josue David Torres Tec", 45, 7);
+	struct Alumno* alumno5 = crearAlumno("Maria Jose Garcia Rios", 118, 5);
+	
+	insertarNodosPorCreditos(&lista, crearNodo(alumno1));
+	insertarNodosPorCreditos(&lista, crearNodo(alumno2));
+	insertarNodosPorCreditos(&lista, crearNodo(alumno3));
+	insertarNodosPorCreditos(&lista, crearNodo(alumno4));
+	insertarNodosPorCreditos(&lista, crearNodo(alumno5));
+
+	imprimirLista(lista);
+	return 0;
+}
+
 struct Alumno* crearAlumno(const char* nombre, int creditos, int semestre) {
 	struct Alumno* alumno = (struct Alumno*)malloc(sizeof(struct Alumno));
 	if (alumno != NULL) {
@@ -24,7 +50,7 @@ struct Alumno* crearAlumno(const char* nombre, int creditos, int semestre) {
 }
 
 void imprimirAlumno(struct Alumno* alumno) {
-	printf("Nombre: %s, Créditos: %d, Semestre: %d\n", alumno->nombreCompleto, alumno->creditosAprobados, alumno->semestreEquivalente);
+	printf("Nombre: %s, Creditos: %d, Semestre: %d\n", alumno->nombreCompleto, alumno->creditosAprobados, alumno->semestreEquivalente);
 }
 
 struct Nodo* crearNodo(struct Alumno* alumno) {
@@ -58,30 +84,4 @@ void imprimirLista(struct Nodo* lista) {
 		imprimirAlumno(&(actual->alumno));
 		actual = actual->siguiente;
 	}
-}
-
-int main() {
-	
-	struct Nodo* lista = NULL;
-	
-	struct Alumno* alumno1 = crearAlumno("Raul Alejandro Magana Flores", 105, 5);
-	struct Alumno* alumno2 = crearAlumno("Jimena Guadalupe Garcia Rios", 107, 4);
-	struct Alumno* alumno3 = crearAlumno("Jesus Mateo Ortiz Chay", 126, 6);
-	struct Alumno* alumno4 = crearAlumno("Josue David Torres Tec", 45, 4);
-	struct Alumno* alumno5 = crearAlumno("Maria Jose Garcia Rios", 118, 5);
-	
-	insertarNodosPorCreditos(&lista, crearNodo(alumno1));
-	insertarNodosPorCreditos(&lista, crearNodo(alumno2));
-	insertarNodosPorCreditos(&lista, crearNodo(alumno3));
-	insertarNodosPorCreditos(&lista, crearNodo(alumno4));
-	insertarNodosPorCreditos(&lista, crearNodo(alumno5));
-
-	imprimirLista(lista);
-	
-	while (lista != NULL) {
-		struct Nodo* temp = lista;
-		lista = lista->siguiente;
-		free(temp);
-	}
-	return 0;
 }
